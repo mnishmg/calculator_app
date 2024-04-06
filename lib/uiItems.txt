@@ -1,0 +1,202 @@
+import 'package:flutter/material.dart';
+
+class CustomColors {
+  static final bgLight = Color(0xfffafafa);
+  static final fgLight = Color(0xffffffff);
+  static final bgDark = Color(0xff151515);
+  static final fgDark = Color(0xff1a1a1a);
+  static final shadeRed = Colors.red.shade300;
+
+  void themeLight() {
+    Color bgColor = Color(0xfffafafa);
+    Color fgColor = Color(0xffffffff);
+  }
+
+  void themeDark() {
+    Color bgColor = Color(0xff151515);
+    Color fgColor = Color(0xff1a1a1a);
+  }
+}
+
+TextStyle _textStyle({Color color = Colors.black,}) {
+  return TextStyle();
+}
+
+
+
+
+
+////////////////////////// main UI code //////////////////////////////
+
+
+
+
+
+import 'package:calculator_app/ui_items.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculator App',
+      theme: ThemeData(),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String _result = '';
+  String _currentValue = '';
+  double _num1 = 0;
+  double _num2 = 0;
+  String _operand = '';
+
+  Widget keyButton(String value, Color bgColor, Color fgColor) {
+    return SizedBox(
+      height: 50,
+      width: 50,
+      child: InkWell(
+        onTap: () {
+          onButtonPressed(value);
+        },
+        child: CircleAvatar(
+          backgroundColor: bgColor,
+          child: Text(
+            value,
+            style: TextStyle(
+                color: fgColor,
+                fontSize: 22,
+                fontFamily: 'Mukta',
+                fontWeight: FontWeight.w700),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void onButtonPressed(String value) {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: CustomColors.bgDark,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: CustomColors.bgDark,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(Iconsax.menu),
+            Text(
+              'Calculator',
+              style: TextStyle(
+                  fontFamily: 'Mukta',
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.7),
+            ),
+            Icon(Icons.close)
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: CustomColors.fgDark,
+              child: Column(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: Container(
+                        color: Colors.amber,
+                      )),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          child: Center(
+                        child: Text(
+                          '$_result',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Mukta'),
+                        ),
+                      )))
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    keyButton(
+                        'C', Color(0x00ffffff), Colors.white.withOpacity(.4)),
+                    keyButton(
+                        '+/-', Color(0x00ffffff), Colors.white.withOpacity(.4)),
+                    keyButton(
+                        '%', Color(0x00ffffff), Colors.white.withOpacity(.4)),
+                    keyButton('/', Color(0x00ffffff), CustomColors.shadeRed),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    keyButton('7', Color(0x00ffffff), Colors.white),
+                    keyButton('8', Color(0x00ffffff), Colors.white),
+                    keyButton('9', Color(0x00ffffff), Colors.white),
+                    keyButton('*', Color(0x00ffffff), CustomColors.shadeRed),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    keyButton('4', Color(0x00ffffff), Colors.white),
+                    keyButton('5', Color(0x00ffffff), Colors.white),
+                    keyButton('6', Color(0x00ffffff), Colors.white),
+                    keyButton('-', Color(0x00ffffff), CustomColors.shadeRed),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    keyButton('1', Color(0x00ffffff), Colors.white),
+                    keyButton('2', Color(0x00ffffff), Colors.white),
+                    keyButton('3', Color(0x00ffffff), Colors.white),
+                    keyButton('+', Color(0x00ffffff), CustomColors.shadeRed),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    keyButton('00', Color(0x00ffffff), Colors.white),
+                    keyButton('0', Color(0x00ffffff), Colors.white),
+                    keyButton('.', Color(0x00ffffff), Colors.white),
+                    keyButton('=', CustomColors.shadeRed, Colors.white),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
