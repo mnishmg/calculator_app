@@ -30,15 +30,27 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool isDark = false;
-  Color bgColor = Color(0xfffafafa);
-  Color fgColor = Color(0xffffffff);
-  Color textColor = Colors.black;
   Color shadeRed = Colors.red.shade300;
 
-  late SharedPreferences _prefs;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    getThemeMode();
+    super.initState();
+  }
+
+  void getThemeMode() async {
+    prefs = await SharedPreferences.getInstance();
+    isDark = prefs.getBool('isDark') ?? false;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color bgColor = isDark ? Color(0xff151515) : Color(0xfffafafa);
+    Color fgColor = isDark ? Color(0xff1a1a1a) : Color(0xffffffff);
+    Color textColor = isDark ? Colors.white : Colors.black;
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -69,15 +81,7 @@ class _MainPageState extends State<MainPage> {
                   onTap: () {
                     setState(() {
                       isDark = !isDark;
-                      if (isDark) {
-                        bgColor = Color(0xff151515);
-                        fgColor = Color(0xff1a1a1a);
-                        textColor = Colors.white;
-                      } else {
-                        bgColor = Color(0xfffafafa);
-                        fgColor = Color(0xffffffff);
-                        textColor = Colors.black;
-                      }
+                      prefs.setBool('isDark', isDark);
                     });
                   },
                 ),
